@@ -1,3 +1,7 @@
+# TestsContractsSolidity
+
+TestsContractsSolidity é um projeto desenvolvido no programa Criptodev com a mentoria do JC Bombardelli, é um contrato ERC20, e um Aidrop, com foco nas funcionalidades de testes com Chai e Mocha.
+
 # Instalar Dependências
 
 ```bash
