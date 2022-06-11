@@ -49,13 +49,13 @@ contract Airdrop  {
 
     // Public Functions
 
-    function subscribe() public {
+    function subscribe(address _subscribe) public {
        require(contractState == Status.ACTIVE,"The Airdrop is not available!");
-       hasSubscribed();
-       require( msg.sender != address(0), "There is no user to interact with the contract!");
-       Subscribe memory subs = Subscribe(msg.sender);
+       hasSubscribed(_subscribe);
+       require( _subscribe != address(0), "There is no user to interact with the contract!");
+       Subscribe memory subs = Subscribe(_subscribe);
        subscribers[subscribersLength] = subs;
-       isSubscribers[msg.sender] = true;
+       isSubscribers[_subscribe] = true;
        subscribersLength++;
     }
 
@@ -97,15 +97,21 @@ contract Airdrop  {
     }
 
     // Private Functions
-    function hasSubscribed() private view {
-           require(isSubscribers[msg.sender] == false, "Vaza!!!");   
+    function hasSubscribed(address _subscribe) private view returns(bool) {
+           require(isSubscribers[_subscribe] == false, "Vaza!!!"); 
+           return true;
     }
 
+     function getSubscribed(address _subscribe) public view isOwner returns(bool) {
+           return isSubscribers[_subscribe];
+    }
     function getBalance() private view returns (uint256) {
     uint256 balance = CryptoToken(tokenAddress).balanceOf(address(this));
     return balance;
     }
-
+   function getTokenAddress() public view returns (address) {
+   return tokenAddress;
+   }
     // Kill
     function kill() public isOwner {
         selfdestruct(payable(owner));
